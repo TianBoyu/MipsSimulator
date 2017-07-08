@@ -14,9 +14,10 @@ string Read::JumpBegin(string the_line)
 	return ans;
 }
 
-void Read::ReadText(char * a)
+void Read::ReadText()
 {
-	ifstream input; input.open(a);
+    ifstream input;
+    input.open("builtin-5140519064-youyurong.s");
 	char * storage = new char[100000];
 	while (input.getline(storage, 10000))
 	{

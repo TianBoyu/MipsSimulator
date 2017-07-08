@@ -453,11 +453,13 @@ void move_::Execution(line the_line)
 }
 void mfhi_::Execution(line the_line)
 {
+	LL ans;
 	my_register * store_register = Simulator::GetSimulator().register_map[the_line.order[1]];
 	store_register->data = Simulator::GetSimulator().hi.data;
 }
 void mflo_::Execution(line the_line)
 {
+	LL ans;
 	my_register * store_register = Simulator::GetSimulator().register_map[the_line.order[1]];
 	store_register->data = Simulator::GetSimulator().lo.data;
 }

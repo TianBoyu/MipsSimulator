@@ -71,7 +71,7 @@ void InstructBEQZ::WriteBack(memory_acc my_mem)
 void InstructLA::WriteBack(memory_acc my_mem)
 {
 	my_mem.store_register->data = my_mem.ans1;
-	--Simulator::GetSimulator().now_pipe.visit_reg[Simulator::GetSimulator().register_number_map[my_mem.the_line.order[1]]];
+    --Simulator::GetSimulator().now_pipe.visit_reg[Simulator::GetSimulator().register_number_map[my_mem.the_line.order[1]]];
 	return;
 }
 void InstructSB::WriteBack(memory_acc my_mem)
@@ -88,7 +88,7 @@ void InstructNOP::WriteBack(memory_acc my_mem)
 {
 	if (Simulator::GetSimulator().status.end_run == 1)
 		Simulator::GetSimulator().status.begin_run = 0;
-	if (my_mem.the_line.option == "syscall" && my_mem.ans2 == -233)
+    if (my_mem.the_line.option == "syscall" && (my_mem.ans2 == -233 || my_mem.ans2 == -234))
 	{
 		Simulator::GetSimulator().v0.data = my_mem.ans1;
 		--Simulator::GetSimulator().now_pipe.visit_reg[2];

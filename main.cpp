@@ -5,14 +5,13 @@
 #include <cstdio>
 using namespace std;
 
-
-int main(int argc, char * argv[])
+int main()
 {
-	//freopen("string_test-huyuncong.in", "r", stdin);
+	freopen("builtin-5140519064-youyurong.in", "r", stdin);
 	Read a;
 	Manage b;
 	Handle c;
-	a.ReadText(argv[1]);
+	a.ReadText();
 	b.ManageText();
 	c.HandleAll();
 	return 0;

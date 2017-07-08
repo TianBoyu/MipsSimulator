@@ -8,7 +8,7 @@ using namespace std;
 class Read
 {
 public:
-	void ReadText(char * a);
+	void ReadText();
 	string JumpBegin(string the_line);
 };
 

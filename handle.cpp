@@ -72,9 +72,9 @@ void Handle::HandleText()
 void Handle::HandleAll()
 {
 	Handle::PreHandleText();
-	Handle::HandleText();
+    Handle::HandleText();
 	//Handle::PipeHandleText();
-	//Handle::PipeLineHandleText();
+    //Handle::PipeLineHandleText();
 }
 void Handle::Debug(line the_line)
 {
@@ -160,8 +160,11 @@ void Handle::PipeLineHandleText()
 		{
 			haz.MA = 0;
 			ins = instruct_map[my_mem.the_line.option];
-			//Handle::Debug(my_mem.the_line);
+            Handle::Debug(my_mem.the_line);
+            //if(my_mem.the_line.option == "syscall" && Simulator::GetSimulator().PC.data > 300)
+             // cout << 1;
 			ins->WriteBack(my_mem);
+            Handle::DebugModify(my_mem.the_line);
 			if (Handle::DataHazard() && Handle::NoDataHazard())
 			{
 				Simulator::GetSimulator().now_pipe.data_hazard = 0;
@@ -174,6 +177,9 @@ void Handle::PipeLineHandleText()
 		{
 			haz.EX = 0;
 			ins = instruct_map[my_ans.the_line.option];
+            //if (my_ans.the_line.option == "syscall" && Simulator::GetSimulator().PC.data > 350)
+              //  cout << "fdssfdg";
+            //my_mem.reset_memory();
 			my_mem = ins->MemoryAccess(my_ans);
 			haz.MA = 1;
 		}
@@ -181,15 +187,19 @@ void Handle::PipeLineHandleText()
 		{
 			haz.ID = 0;
 			ins = instruct_map[my_data.the_line.option];
+            //my_ans.reset_answer();
 			my_ans = ins->Execution(my_data);
 			haz.EX = 1;
 		}
 		if (Simulator::GetSimulator().now_pipe.pre_enable == 1 && haz.IF == 1)
 		{
 			haz.IF = 0;
-			ins = instruct_map[the_line.option]; 
+            ins = instruct_map[the_line.option];
+            //if (the_line.option == "syscall" && Simulator::GetSimulator().PC.data > 350)
+              //  cout << "fdssfdg";
 			if (!Handle::ControllHazard() || (haz.ID == 0 && haz.EX == 0 && haz.MA == 0))
 			{
+                //my_data.reset_data();
 				my_data = ins->DataPreparetion(the_line);
 				if (Handle::DataHazard())
 				{
@@ -214,12 +224,14 @@ void Handle::PipeLineHandleText()
 			haz.IF = 1;
 		}
 	}
+
 }
 
 line Handle::InstructionFetch()
 {
 	line tmp = Simulator::GetSimulator().paper[Simulator::GetSimulator().PC.data];
-	string opt = tmp.option;
+
+    string opt = tmp.option;
 	if (tmp.mykind != instruct)
 		Simulator::GetSimulator().now_pipe.pre_enable = 0;
 	else Simulator::GetSimulator().now_pipe.pre_enable = 1;
@@ -273,7 +285,7 @@ void Handle::StartPipeline_Ctrl()
 }
 void Handle::DebugModify(line the_line)
 {
-	ofstream output("file1.out", ios::app);
+    ofstream output("file2.out", ios::app);
 	output << Simulator::GetSimulator().PC.data << ' ' << the_line.order[0] << ' ' << the_line.order[1] << ' ' << the_line.order[2] << ' ' << the_line.order[3] << endl;
 	for (int i = 0; i < 34; ++i)
 	{

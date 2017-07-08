@@ -42,6 +42,7 @@ struct data_hazard
 	bool MA;
 	bool WB;
 	data_hazard() : IF(0), ID(0), EX(0), MA(0), WB(0) {}
+
 };
 
 struct line
@@ -60,6 +61,12 @@ struct data_pre
 	LL data2;
 	int address;
 	data_pre(line tmp) : the_line(tmp){}
+    void reset_data()
+    {
+        store_register = nullptr;
+        data1 = 0; data2 = 0;
+        address = -1;
+    }
 };
 struct answer_get
 {
@@ -71,7 +78,15 @@ struct answer_get
 	bool jump;
 	bool change_ra;
 	answer_get() : jump(0) {}
-	answer_get(data_pre data) : the_line(data.the_line), store_register(data.store_register), address(data.address), jump(0), change_ra(0) {}
+    answer_get(data_pre data) : the_line(data.the_line), store_register(data.store_register), ans1(0), ans2(0), address(data.address), jump(0), change_ra(0) {}
+    void reset_answer()
+    {
+        store_register = nullptr;
+        ans1 = 0; ans2 = 0;
+        address = -1;
+        jump = 0; change_ra = 0;
+
+    }
 };
 struct memory_acc
 {
@@ -83,6 +98,13 @@ struct memory_acc
 	bool jump;
 	bool change_ra;
 	memory_acc() {}
-	memory_acc(answer_get ans) : the_line(ans.the_line), store_register(ans.store_register), ans1(ans.ans1), ans2(ans.ans2), address(ans.address), jump(ans.jump), change_ra(ans.change_ra) {}
+    memory_acc(answer_get ans) : the_line(ans.the_line), store_register(ans.store_register), ans1(ans.ans1), ans2(ans.ans2), address(ans.address), jump(ans.jump), change_ra(ans.change_ra) {}
+    void reset_memory()
+    {
+        store_register = nullptr;
+        ans1 = 0; ans2 = 0;
+        address = -1;
+        jump = 0; change_ra = 0;
+    }
 };
 #endif

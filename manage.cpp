@@ -37,7 +37,7 @@ void Manage::ManageLine(string the_line, int line_num)
 		string tmp; int i = 0, j = 0;
 		while (i < the_line.length())
 		{
-			if (the_line[i] == '\n' || the_line[i] == '#')
+			if (the_line[i] == '\n' || the_line[i] == '\#')
 			{
 				sentence.order[i] = "EndOfLine";
 				Simulator::GetSimulator().paper.push_back(sentence);

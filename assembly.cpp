@@ -3,7 +3,6 @@
 #include "simulator.h"
 #include "assembly.h"
 #include "tools.h"
-#include <cstring>
 
 void align_::Configure(line the_line)
 {
